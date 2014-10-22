@@ -1,4 +1,4 @@
 *.pyc
 fabfile.py
 env
-db.squlite3
+*/db.squlite3
