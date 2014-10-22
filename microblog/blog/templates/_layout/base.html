@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+	<title>{%block page_title%}{%endblock%}</title>
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-responsive.css">
+</head>
+<body>
+<div class="container">
+	{% block page_content %}{% endblock %}
+</div>
+</body>
+</html>

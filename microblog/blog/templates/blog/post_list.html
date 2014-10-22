@@ -1,0 +1,13 @@
+{% extend '_layouts/base.html' %}
+
+{% block page_title %}Blog Posts{% endblock %}
+{% block page_content %}
+<h1>Blog Posts</h1>
+<ul>
+	{% for post in post_list %}
+	<li><a href="{% url 'blog_detail' post.slug%}">{{post.title}}</a></li>
+	{% empty %}
+	<li>Sorry, no posts yet, Check back soon!</li>
+	{% endfor %}
+</ul>
+{% endblock %}
