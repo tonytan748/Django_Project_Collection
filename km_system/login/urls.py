@@ -1,8 +1,8 @@
 from django.conf.urls import url,patterns
 
-from . import views
+from views import *
 
 urlpatterns=patterns('',
-	url(r'^/$',views.mylogin),
-	url(r'^/logout/$',views.mylogout),
+	url(r'^$',mylogin),
+	url(r'^/logout/$',mylogout),
 )
