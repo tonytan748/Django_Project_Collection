@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	Welcome to KM System
+{% endblock %}
+
+{% block navigation %}
+	{% for list in management_list %}
+		<li><a href="#">{{ list.management_item}}</a></li>
+	{% endfor %}
+{% endblock %}
+
