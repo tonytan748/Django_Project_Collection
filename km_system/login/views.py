@@ -24,7 +24,6 @@ def mylogin(request):
 		form=LoginForm()
 	return render(request,'login.html',{'errors':errors,'form','form'})
 
-
 def login_validate(request,username,password):
 	user=authenticate(username=username,password=password)
 	if user is not None:
