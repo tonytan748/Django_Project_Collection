@@ -16,7 +16,7 @@ def SupplierList(request):
 @login_required
 def SupplierDetail(request,pk):
 	supplier=Supplier.objects.get(pk=pk)
-	return render(request,'supplier/supplier_detail.html',{'supplier':supplier})
+	return render(request,reverse('supplier_detail',kwargs={'supplier':supplier})
 	
 @login_required
 def SupplierDelete(request,pk):
