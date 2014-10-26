@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block page_content %}
-<h1>Supplier List</h1>
+<h1 class="page-header">Supplier {{ supplier.code }}</h1>
 
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" action="" method="post">{% csrf_token %}
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">NO.</label>
 		<div class="col-xs-2 col-sm-6">
@@ -18,71 +18,71 @@
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CODE</label>
 		<div class="col-xs-8 col-sm-6">
-		       <input type="text" class="form-control" id="supplier_code" value="{{ supplier.code }}">
+		       <input type="text" class="form-control" id="supplier_code" value="{{ supplier.code }}" name="code">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">NAME</label>
 		<div class="col-xs-8 col-sm-10">
-		       <input type="text" class="form-control" id="supplier_name" value="{{ supplier.name}}">
+		       <input type="text" class="form-control" id="supplier_name" value="{{ supplier.name}}" name="name">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">ADDRESS</label>
 		<div class="col-xs-8 col-sm-10">
-		       <textarea class="form-control" rows=3 >{{ supplier.address}}</textarea>
+		       <textarea class="form-control" rows=3  name="address">{{ supplier.address}}</textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">PRODUCT</label>
 		<div class="col-xs-8 col-sm-6">
-		       <input type="text" class="form-control" id="supplier_product" value="{{ supplier.product }}">
+		       <input type="text" class="form-control" id="supplier_product" value="{{ supplier.product }}" name="product">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CONTACT</label>
 		<div class="col-xs-8 col-sm-6">
-		       <input type="text" class="form-control" id="supplier_contact" value="{{ supplier.contact }}">
+		       <input type="text" class="form-control" id="supplier_contact" value="{{ supplier.contact }}" name="contact">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">PHONE</label>
 		<div class="col-xs-8 col-sm-6">
-		       <input type="text" class="form-control" id="supplier_phone" value="{{ supplier.phone }}">
+		       <input type="text" class="form-control" id="supplier_phone" value="{{ supplier.phone }}" name="phone">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">FAX</label>
 		<div class="col-xs-8 col-sm-6">
-		       <input type="text" class="form-control" id="supplier_fax" value="{{ supplier.fax }}">
+		       <input type="text" class="form-control" id="supplier_fax" value="{{ supplier.fax }}" name="fax">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">REMARK</label>
 		<div class="col-xs-8 col-sm-6">
-			<textarea class="form-control" rows=3>{{ supplier.remark  }}</textarea>
+			<textarea class="form-control" rows=3 name="remark">{{ supplier.remark  }}</textarea>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CREATE_BY</label>
 		<div class="col-xs-8 col-sm-6">
-		       <p class="form-control-static">{{ supplier.create_by }}</p>
+			<input type="text" class="form-control" id="create_by" value="{{ supplier.create_by }}" name="create_by" readonly>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CREATE_DATE</label>
 		<div class="col-xs-8 col-sm-6">
-		       <p class="form-control-static">{{ supplier.create_date }}</p>
+			<input type="text" class="form-control" id="create_date" value="{{ supplier.create_date }}" name="create_date" readonly>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="checkbox-inline">
-		<input type="checkbox" id="inlineCheckbox1" value="{{ supplier.is_published }}"> Is Published </label>
+		<input type="checkbox" id="inlineCheckbox1" value="{{ supplier.is_published }}" name="is_published"> Is Published </label>
 	</div>
 	<div class="form-group">
-		<input type="submit" value="EDIT" class="col-xs-3 col-sm-3">
+		<input type="submit" value="EDIT" class="btn btn-default">
 		<div class="col-xs-3 clo-sm-3">
-			<button type="button" class="btn btn-default" href="{{ url 'delete' id}}">DELETE</button>
+			<button type="button" class="btn btn-default" href="{% url 'supplier:delete' pk=supplier.id %}">DELETE</button>
 		</div>
 	</div>
     </form>

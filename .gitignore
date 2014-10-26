@@ -1,4 +1,6 @@
 *.pyc
+.swp
+.swo
 fabfile.py
 env
 */db.sqlite3
