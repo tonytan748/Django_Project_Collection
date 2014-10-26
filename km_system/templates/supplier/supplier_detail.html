@@ -8,28 +8,34 @@
 <h1 class="page-header">Supplier {{ supplier.code }}</h1>
 
     <form class="form-horizontal" role="form" action="" method="post">{% csrf_token %}
+	{% if supplier.id %}
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">NO.</label>
 		<div class="col-xs-2 col-sm-6">
 		       <p class="form-control-static">{{ supplier.id }}</p>
 		</div>
 	</div>
+	{% endif %}
 
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CODE</label>
 		<div class="col-xs-8 col-sm-6">
 		       <input type="text" class="form-control" id="supplier_code" value="{{ supplier.code }}" name="code">
+			{% if supplier.code %}
+			{% else %}
+				<p>Please type in 3 latters.</p>
+			{% endif %}
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">NAME</label>
-		<div class="col-xs-8 col-sm-10">
+		<div class="col-xs-8 col-sm-6">
 		       <input type="text" class="form-control" id="supplier_name" value="{{ supplier.name}}" name="name">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">ADDRESS</label>
-		<div class="col-xs-8 col-sm-10">
+		<div class="col-xs-8 col-sm-6">
 		       <textarea class="form-control" rows=3  name="address">{{ supplier.address}}</textarea>
 		</div>
 	</div>
@@ -69,21 +75,26 @@
 			<input type="text" class="form-control" id="create_by" value="{{ supplier.create_by }}" name="create_by" readonly>
 		</div>
 	</div>
+	{% if supplier.code %}
 	<div class="form-group">
 		<label class="col-xs-2 col-sm-2 control-label">CREATE_DATE</label>
 		<div class="col-xs-8 col-sm-6">
-			<input type="text" class="form-control" id="create_date" value="{{ supplier.create_date }}" name="create_date" readonly>
+			<input type="text" class="form-control" id="create_date" value="{{ create_date }}" name="create_date" readonly>
 		</div>
 	</div>
+	{% endif %}
 	<div class="form-group">
 		<label class="checkbox-inline">
 		<input type="checkbox" id="inlineCheckbox1" value="{{ supplier.is_published }}" name="is_published"> Is Published </label>
 	</div>
 	<div class="form-group">
-		<input type="submit" value="EDIT" class="btn btn-default">
-		<div class="col-xs-3 clo-sm-3">
+		{% if supplier.code %}
+			<input type="submit" value="EDIT" class="btn btn-default">
 			<button type="button" class="btn btn-default" href="{% url 'supplier:delete' pk=supplier.id %}">DELETE</button>
-		</div>
+		{% else %}
+			<input type="submit" value="ADD" class="btn btn-default">
+		{% endif %}
+		<button type="button" class="btn btn-default" href="{% url 'supplier:list' %}">Black</button>
 	</div>
     </form>
 
