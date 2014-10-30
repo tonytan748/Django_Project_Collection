@@ -90,7 +90,7 @@
 	<div class="form-group">
 		{% if supplier.code %}
 			<input type="submit" value="EDIT" class="btn btn-default">
-			<button type="button" class="btn btn-default" href="{% url 'supplier:delete' pk=supplier.id %}">DELETE</button>
+			<a class= "btn btn-default" href="{% url 'supplier:delete' pk=supplier.id %}">delete</a>
 		{% else %}
 			<input type="submit" value="ADD" class="btn btn-default">
 		{% endif %}

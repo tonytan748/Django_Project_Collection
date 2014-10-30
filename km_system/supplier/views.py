@@ -4,10 +4,10 @@ from django.shortcuts import render,get_object_or_404,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from django.core.urlresolvers import reverse
 
-#from forms import SupplierForm
 from models import Supplier
 
 @login_required
@@ -17,21 +17,23 @@ def SupplierList(request):
 
 @login_required
 def SupplierSearch(request):
-	if request.method=='POST':
-		words=request.POST['search']
-		print words
-		if words:
-			supplier_list=Supplier.objects.filter(code__contains=words).filter(name__contains=words).filter(address_contains=words).filter(product__contains=words).filter(contact__contains=words).filter(phone__contains=words).filter(fax__contains=words).filter(create_by__contains=words)
-			return render(request,'supplier/supplier_list.html',{'supplier_list':supplier_list})
-		else:
-			SupplierList(request)
+	query=request.POST.get('search','')
+	print query
+	if query:
+		qset=(Q(code__icontains=query)|Q(name__icontains=query)|Q(address__icontains=query)|Q(product__icontains=query)|Q(contact__icontains=query)|Q(phone__icontains=query))
+		result=Supplier.objects.filter(qset)
+		return render(request,'supplier/supplier_list.html',{'supplier_list':supplier_list,'query':query})
+	else:
+		supplier_list=Supplier.objects.all()
+		messages=['No result, return all.']
+		return render(request,'supplier/supplier_list.html',{'supplier_list':result,'messages':messages})
 
 @login_required
 def SupplierAdd(request):
 	supplier={}
 	messages=[]
 	if request.method=='POST':
-		c=str((Supplier.objects.count()+1)/1000) 
+		c=str((int(Supplier.objects.count())+1)/1000) 
 		code=request.POST['code']+' '+c[1:]
 		name=request.POST['name']
 		address=request.POST['address']
@@ -64,9 +66,7 @@ def SupplierAdd(request):
 	supplier['create_by']=request.user
 	supplier['create_date']=''
 	supplier['is_published']=True
-	
 	return render(request,'supplier/supplier_detail.html',{'supplier':supplier})
-
 
 @login_required
 def SupplierDetail(request,pk):
@@ -99,20 +99,16 @@ def SupplierDetail(request,pk):
 
 	supplier=get_object_or_404(Supplier,pk=pk)
 	create_date=str(supplier.create_date)
-	return render(request,'supplier/supplier_detail.html',{'supplier':supplier})
+	return render(request,'supplier/supplier_detail.html',{'supplier':supplier,'create_date':create_date})
 
 @login_required
 def SupplierDelete(request,pk):
+	print pk
 	messages=[]
-	if request.mothed=='POST':
-		print pk
-		if pk:
-			item=Supplier.objects.get(pk=pk)
-			item.delete()
-			messages.append('Delete Success!')
-			return HttpResponseRedirect(reverse('list/'),{'messages':messages})
-		else:
-			messages.append('please check your delete item.')
-			return HttpResoponseRedirect('list/',{'messages':messages})
-	return HttpResponseRedirect('list/')
+	item=Supplier.objects.get(pk=pk)
+	item.delete()
+	messages.append('Delete Success!')
+	supplier_list=Supplier.objects.all()
+	return render(request,'supplier/supplier_list.html',{'supplier_list':supplier_list,'messages':messages})
+
 

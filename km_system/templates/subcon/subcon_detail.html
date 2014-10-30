@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	Welcome to KM System
+{% endblock %}
+
+{% block page_content %}
+
+<h1 class="page-header">SubCon {{ object.code }}</h1>
+
+    <form class="form-horizontal" role="form" action="" method="post">{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="EDIT" class="btn btn-default">
+	<a class= "btn btn-default" href="{% url 'subcon:delete' pk=subcon.id %}">Delete</a>
+	<button type="button" class="btn btn-default" href="{% url 'subcon:list' %}">Black</button>
+    </form>
+
+{% endblock %}

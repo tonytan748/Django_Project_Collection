@@ -7,6 +7,8 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
+#import DEFAULT_SETTINGS
+import django.conf.global_settings as DEFAULT_SETTINGS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -39,6 +41,8 @@ INSTALLED_APPS = (
 
     'login',
     'supplier',
+    'subcon',
+    'pagination',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,6 +53,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'km_system.urls'
@@ -86,5 +91,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS=('./static',)
 
 TEMPLATE_DIRS=('./templates',)
+
+TEMPLATE_CONTEXT_PROCESSORS=(
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+)

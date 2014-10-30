@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load pagination_tags %}
+
+{% block page_title %}
+	Welcome to KM System
+{% endblock %}
+
+{% block page_content %}
+<h1 class="page-header">SubCon List</h1>
+	<a href="{% url 'subcon:add' %}">Add New SubCon</a>
+	<form action='' method="POST">{% csrf_token %}
+		<input type="text" name="search" value="{{ query|escape }}">
+		<input type="submit" value="Search">
+	</form>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>CODE</th>
+                    <th>NAME</th>
+                    <th>TEL</th>
+                    <th>FAX</th>
+                    <th>CONTACT</th>
+                    <th>ADDRESS</th>
+                    <th>SCOPE OF WORK</th>
+                    <th>REMARK</th>
+                    <th>GST VERIFICATION</th>
+                    <th>GST REG NO</th>
+		    <th>CREATE BY</th>
+		    <th>CREATE DATE</th>
+		    <th>EDIT BY</th>
+		    <th>EDIT DATE</th>
+		    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+		{% autopaginate subcon_list 50 %}
+		{% for list in object_list %}
+                <tr>
+                    <td>{{ list.code  }}</td>
+                    <td>{{ list.name  }}</td>
+                    <td>{{ list.tel  }}</td>
+                    <td>{{ list.fax  }}</td>
+                    <td>{{ list.contact  }}</td>
+                    <td>{{ list.address  }}</td>
+                    <td>{{ list.scope_of_work  }}</td>
+                    <td>{{ list.remark  }}</td>
+                    <td>{{ list.gst_verification  }}</td>
+                    <td>{{ list.gst_reg_no }}</td>
+                    <td>{{ list.create_by  }}</td>
+                    <td>{{ list.create_date  }}</td>
+                    <td>{{ list.edit_by  }}</td>
+                    <td>{{ list.edit_date  }}</td>
+		    <td><a class="btn btn-default" href="{% url 'subcon:detail' pk=list.id %}">Detail</a></td>
+                </tr>
+		{% empty %}
+		<tr>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		{% endfor %}
+		{% paginate %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
